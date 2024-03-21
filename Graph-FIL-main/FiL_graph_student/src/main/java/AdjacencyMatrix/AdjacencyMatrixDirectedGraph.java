@@ -139,9 +139,9 @@ public class AdjacencyMatrixDirectedGraph {
 	 * @return a new graph which is the inverse graph of this.matrix
  	 */
 	public AdjacencyMatrixDirectedGraph computeInverse() {
-		AdjacencyMatrixDirectedGraph am = new AdjacencyMatrixDirectedGraph(new int[this.order][this.order]);	
+		AdjacencyMatrixDirectedGraph amInv = new AdjacencyMatrixDirectedGraph(this.matrix);	
 		// A completer
-		return am;
+		return amInv;
 	}
 
 	@Override
