@@ -121,8 +121,9 @@ public class AdjacencyListDirectedGraph {
     }
 
     /**
-	 * Adds the arc (from,to) if it is not already present in the graph, requires the existing of nodes from and to 
- 	 */
+	* Adds the arc (from,to) if it is not already present in the graph, requires the existing of nodes from and to 
+  	* On non-valued graph, every arc has a weight equal to 0.
+ 	*/
     public void addArc(DirectedNode from, DirectedNode to) {
     	// A completer
     }
@@ -165,7 +166,7 @@ public class AdjacencyListDirectedGraph {
 	 * @return a new graph implementing IDirectedGraph interface which is the inverse graph of this
  	 */
     public AdjacencyListDirectedGraph computeInverse() {
-        AdjacencyListDirectedGraph g = new AdjacencyListDirectedGraph(new int[this.order][this.order]); // creation of a new empty matrix of size equal to "order". 
+        AdjacencyListDirectedGraph g = new AdjacencyListDirectedGraph(this); // creation of a copy of the current graph. 
         // A completer
         return g;
     }
