@@ -93,23 +93,22 @@ public class AdjacencyListUndirectedGraph {
     }
     
     /**
-	 * @return the number of edges in the graph
- 	 */ 
+     * @return the number of edges in the graph
+     */ 
     public int getNbEdges() {
         return this.m;
     }
 
     /**
-	 * @return true if there is an edge between x and y
-	 */
-    public boolean isEdge(UndirectedNode x, UndirectedNode y) {  
-    	return getNodeOfList(x).getNeighbours().containsKey(getNodeOfList(y));
+     * @return true if there is an edge between x and y
+     */
+    public boolean isEdge(UndirectedNode x, UndirectedNode y) {      	
         // A completer
-    	//return true;
+    	return true;
     }
 
     /**
-	 * Removes edge (x,y) if there exists one
+     * Removes edge (x,y) if there exists one
      */
     public void removeEdge(UndirectedNode x, UndirectedNode y) {
     	if(isEdge(x,y)){
@@ -118,7 +117,8 @@ public class AdjacencyListUndirectedGraph {
     }
 
     /**
-	 * Adds edge (x,y), requires that nodes x and y already exist
+     * Adds edge (x,y), requires that nodes x and y already exist
+     * In non-valued graph, every edge has a cost equal to 0
      */
     public void addEdge(UndirectedNode x, UndirectedNode y) {
     	if(!isEdge(x,y)){
@@ -174,7 +174,8 @@ public class AdjacencyListUndirectedGraph {
         GraphTools.afficherMatrix(mat);
         AdjacencyListUndirectedGraph al = new AdjacencyListUndirectedGraph(mat);
         System.out.println(al);
-        System.out.println(al.isEdge(new UndirectedNode(2), new UndirectedNode(5)));
+        System.out.println("(2,5) is it in the graph ? " +  al.isEdge(al.getNodes().get(2), al.getNodes().get(5)));
+        
         // A completer
     }
 
