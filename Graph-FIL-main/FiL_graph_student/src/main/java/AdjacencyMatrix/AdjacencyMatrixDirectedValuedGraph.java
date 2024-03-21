@@ -56,6 +56,16 @@ public class AdjacencyMatrixDirectedValuedGraph extends AdjacencyMatrixDirectedG
 		super.addArc(from,to);
 		// A completer
 	}
+
+	/**
+	 * @return two new graphs which are the inverse graphs of this.matrix and this.matrixCosts
+ 	 */
+	public AdjacencyMatrixDirectedValuedGraph computeInverse() {
+		AdjacencyMatrixDirectedValuedGraph amInv = new AdjacencyMatrixDirectedValuedGraph(this.matrix,this.matrixCosts);	
+		// A completer
+				
+		return amInv;
+	}
 	
 	@Override
 	public String toString() {
