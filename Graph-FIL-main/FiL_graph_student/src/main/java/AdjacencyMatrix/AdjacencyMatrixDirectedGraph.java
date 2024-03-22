@@ -5,6 +5,11 @@ import GraphAlgorithms.GraphTools;
 import Nodes.AbstractNode;
 import Nodes.DirectedNode;
 
+import guru.nidi.graphviz.engine.Format;
+import guru.nidi.graphviz.engine.Graphviz;
+import guru.nidi.graphviz.model.MutableGraph;
+import static guru.nidi.graphviz.model.Factory.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -166,6 +171,32 @@ public class AdjacencyMatrixDirectedGraph {
 		return s.toString();
 	}
 
+	public void graphVis() {
+		MutableGraph graph = mutGraph("graph").setDirected(true);
+
+		for (int i = 0; i < matrix.length; i++) {
+			char nodeName = (char) ('A' + i);
+			graph.add(mutNode(String.valueOf(nodeName)));
+		}
+
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				if (matrix[i][j] == 1) {
+					char nodeNameI = (char) ('A' + i);
+					char nodeNameJ = (char) ('A' + j);
+					graph.add(mutNode(String.valueOf(nodeNameI)).addLink(mutNode(String.valueOf(nodeNameJ))));
+				}
+			}
+		}
+
+		try {
+			Graphviz.fromGraph(graph).width(600).render(Format.PNG).toFile(new java.io.File("./target/result.png"));
+			System.out.println("png created");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void main(String[] args) {
 		int[][] matrix2 = GraphTools.generateGraphData(10, 20, false, false, false, 100001);
 		AdjacencyMatrixDirectedGraph am = new AdjacencyMatrixDirectedGraph(matrix2);
@@ -189,5 +220,7 @@ public class AdjacencyMatrixDirectedGraph {
 
 		System.out.println("\n\nCompute Inverse Matrix : ");
 		System.out.println(am.computeInverse());
+
+		am.graphVis();
 	}
 }

@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import guru.nidi.graphviz.engine.Format;
+import guru.nidi.graphviz.engine.Graphviz;
+import guru.nidi.graphviz.model.MutableGraph;
+import static guru.nidi.graphviz.model.Factory.*;
+
 import AdjacencyList.AdjacencyListUndirectedGraph;
 
 /**
@@ -146,6 +151,32 @@ public class AdjacencyMatrixUndirectedGraph {
 		return s.toString();
 	}
 
+	public void graphVis() { //TODO undirected
+		MutableGraph graph = mutGraph("graph").setDirected(true);
+
+		for (int i = 0; i < matrix.length; i++) {
+			char nodeName = (char) ('A' + i);
+			graph.add(mutNode(String.valueOf(nodeName)));
+		}
+
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				if (matrix[i][j] == 1) {
+					char nodeNameI = (char) ('A' + i);
+					char nodeNameJ = (char) ('A' + j);
+					graph.add(mutNode(String.valueOf(nodeNameI)).addLink(mutNode(String.valueOf(nodeNameJ))));
+				}
+			}
+		}
+
+		try {
+			Graphviz.fromGraph(graph).width(600).render(Format.PNG).toFile(new java.io.File("./target/result.png"));
+			System.out.println("png created");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void main(String[] args) {
 		int[][] mat2 = GraphTools.generateGraphData(10, 35, false, true, false, 100001);
 		//GraphTools.afficherMatrix(mat2);
@@ -170,5 +201,7 @@ public class AdjacencyMatrixUndirectedGraph {
 		System.out.println("\nAfter removing one edge {3,5} :");
 		am.removeEdge(3,5);
 		System.out.println(am);
+
+		am.graphVis();
 	}
 }
