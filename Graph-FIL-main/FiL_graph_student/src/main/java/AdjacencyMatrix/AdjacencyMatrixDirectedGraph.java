@@ -117,7 +117,7 @@ public class AdjacencyMatrixDirectedGraph {
 	 * @return true if arc (from,to) exists in the graph
  	 */
 	public boolean isArc(int from, int to) {
-		return matrix[from][to] == 1;
+		return matrix[from][to] > 0;
 	}
 
 	/**
@@ -142,8 +142,14 @@ public class AdjacencyMatrixDirectedGraph {
 	 * @return a new graph which is the inverse graph of this.matrix
  	 */
 	public AdjacencyMatrixDirectedGraph computeInverse() {
-		AdjacencyMatrixDirectedGraph amInv = new AdjacencyMatrixDirectedGraph(this.matrix);	
-		// A completer
+		AdjacencyMatrixDirectedGraph amInv = new AdjacencyMatrixDirectedGraph(this.matrix);
+
+		for(int i = 0; i<this.order; i++){
+			for(int j = 0; j<this.order; j++){
+				amInv.matrix[i][j] = this.matrix[j][i];
+			}
+		}
+
 		return amInv;
 	}
 
@@ -181,5 +187,7 @@ public class AdjacencyMatrixDirectedGraph {
 			System.out.print(integer + ", ");
 		}
 
+		System.out.println("\n\nCompute Inverse Matrix : ");
+		System.out.println(am.computeInverse());
 	}
 }
