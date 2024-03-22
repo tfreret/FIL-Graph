@@ -117,22 +117,25 @@ public class AdjacencyMatrixDirectedGraph {
 	 * @return true if arc (from,to) exists in the graph
  	 */
 	public boolean isArc(int from, int to) {
-		// A completer
-		return true;
+		return matrix[from][to] == 1;
 	}
 
 	/**
 	 * removes the arc (from,to) if there exists at least one between these nodes in the graph.
 	 */
 	public void removeArc(int from, int to) {
-		// A completer
+		if (isArc(from, to)) {
+			matrix[from][to]--;
+			m--;
+		}
 	}
 
 	/**
 	 * Adds the arc (from,to). We allow multiple graph.
 	 */
 	public void addArc(int from, int to) {
-		// A completer
+		matrix[from][to]++;
+		m++;
 	}
 
 	/**
@@ -160,6 +163,7 @@ public class AdjacencyMatrixDirectedGraph {
 	public static void main(String[] args) {
 		int[][] matrix2 = GraphTools.generateGraphData(10, 20, false, false, false, 100001);
 		AdjacencyMatrixDirectedGraph am = new AdjacencyMatrixDirectedGraph(matrix2);
+
 		System.out.println(am);
 		System.out.println("n = "+am.getNbNodes()+ "\nm = "+am.getNbArcs() +"\n");
 		
@@ -176,6 +180,6 @@ public class AdjacencyMatrixDirectedGraph {
 		for (Integer integer : t2) {
 			System.out.print(integer + ", ");
 		}
-		// A completer
+
 	}
 }

@@ -102,22 +102,27 @@ public class AdjacencyMatrixUndirectedGraph {
      * @return true if the edge is in the graph.
      */
 	public boolean isEdge(int x, int y) {
-		// A completer
-		return true;		
-	}
+        return matrix[x][y] > 0;
+    }
 	
 	/**
      * removes the edge (x,y) if there exists at least one between these nodes in the graph.
      */
 	public void removeEdge(int x, int y) {
-		// A completer
+		if (isEdge(x, y)) {
+			matrix[x][y]--;
+			matrix[y][x]--;
+			m--;
+		}
 	}
 
 	/**
      * adds the edge (x,y), we allow the multi-graph.
      */
 	public void addEdge(int x, int y) {
-		// A completer
+		matrix[x][y]++;
+		matrix[y][x]++;
+		m++;
 	}
 
 	
@@ -165,7 +170,5 @@ public class AdjacencyMatrixUndirectedGraph {
 		System.out.println("\nAfter removing one edge {3,5} :");
 		am.removeEdge(3,5);
 		System.out.println(am);
-		// A completer
 	}
-
 }
