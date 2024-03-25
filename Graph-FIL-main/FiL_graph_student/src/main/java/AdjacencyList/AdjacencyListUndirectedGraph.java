@@ -102,16 +102,15 @@ public class AdjacencyListUndirectedGraph {
     /**
      * @return true if there is an edge between x and y
      */
-    public boolean isEdge(UndirectedNode x, UndirectedNode y) {      	
-        // A completer
-    	return true;
+    public boolean isEdge(UndirectedNode x, UndirectedNode y) {
+        return x.getNeighbours().containsKey(y) && y.getNeighbours().containsKey(x);
     }
 
     /**
      * Removes edge (x,y) if there exists one
      */
     public void removeEdge(UndirectedNode x, UndirectedNode y) {
-    	if(isEdge(x,y)){
+    	if (isEdge(x,y)) {
     		// A completer
     	}
     }
