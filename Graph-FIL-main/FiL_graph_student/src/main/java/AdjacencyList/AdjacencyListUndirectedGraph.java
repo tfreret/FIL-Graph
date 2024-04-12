@@ -103,7 +103,7 @@ public class AdjacencyListUndirectedGraph {
      * @return true if there is an edge between x and y
      */
     public boolean isEdge(UndirectedNode x, UndirectedNode y) {
-        return x.getNeighbours().containsKey(y) && y.getNeighbours().containsKey(x);
+        return x.getNeighbours().containsKey(y);
     }
 
     /**
@@ -111,7 +111,9 @@ public class AdjacencyListUndirectedGraph {
      */
     public void removeEdge(UndirectedNode x, UndirectedNode y) {
     	if (isEdge(x,y)) {
-    		// A completer
+            x.getNeighbours().remove(y);
+            y.getNeighbours().remove(x);
+            this.m--;
     	}
     }
 
@@ -121,7 +123,9 @@ public class AdjacencyListUndirectedGraph {
      */
     public void addEdge(UndirectedNode x, UndirectedNode y) {
     	if(!isEdge(x,y)){
-    		// A completer
+            x.getNeighbours().put(y, 0);
+            y.getNeighbours().put(x, 0);
+            this.m++;
     	}
     }
 

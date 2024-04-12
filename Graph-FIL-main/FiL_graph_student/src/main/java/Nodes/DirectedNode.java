@@ -2,6 +2,7 @@ package Nodes;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class DirectedNode extends AbstractNode {
 
@@ -59,6 +60,9 @@ public class DirectedNode extends AbstractNode {
     public int getNbPreds() {
         return preds.size();
     }
+
+    public Set<DirectedNode> getListSuccs() { return this.succs.keySet(); }
+    public Set<DirectedNode> getListPreds() { return this.preds.keySet(); }
 
     /**
      * @param suc the new list of successors for node this
