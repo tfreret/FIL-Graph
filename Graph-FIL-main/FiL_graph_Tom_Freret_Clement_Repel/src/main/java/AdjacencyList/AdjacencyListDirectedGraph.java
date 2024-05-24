@@ -109,23 +109,32 @@ public class AdjacencyListDirectedGraph {
 	 * @return true if arc (from,to) exists in the graph
  	 */
     public boolean isArc(DirectedNode from, DirectedNode to) {
-    	return from.getListSuccs().contains(to);
+        return from.getSuccs().containsKey(to);
     }
 
     /**
 	 * Removes the arc (from,to), if it exists
  	 */
     public void removeArc(DirectedNode from, DirectedNode to) {
-    	// A completer
+        if (from.getSuccs().remove(to) != null) {
+            to.getPreds().remove(from);
+            this.m--;
+        }
     }
+
 
     /**
 	* Adds the arc (from,to) if it is not already present in the graph, requires the existing of nodes from and to 
   	* On non-valued graph, every arc has a weight equal to 0.
  	*/
     public void addArc(DirectedNode from, DirectedNode to) {
-    	// A completer
+        if (!from.getSuccs().containsKey(to)) {
+            from.getSuccs().put(to, 0);
+            to.getPreds().put(from, 0);
+            this.m++;
+        }
     }
+
 
     //--------------------------------------------------
     // 				Methods
@@ -165,11 +174,25 @@ public class AdjacencyListDirectedGraph {
 	 * @return a new graph implementing IDirectedGraph interface which is the inverse graph of this
  	 */
     public AdjacencyListDirectedGraph computeInverse() {
-        AdjacencyListDirectedGraph g = new AdjacencyListDirectedGraph(this); // creation of a copy of the current graph. 
-        // A completer
+        AdjacencyListDirectedGraph g = new AdjacencyListDirectedGraph();
+        g.order = this.order;
+        g.nodes = new ArrayList<>(this.order);
+
+        for (int i = 0; i < this.order; i++) {
+            g.nodes.add(new DirectedNode(i));
+        }
+
+        for (DirectedNode n : this.getNodes()) {
+            for (DirectedNode succ : n.getSuccs().keySet()) {
+                g.nodes.get(succ.getLabel()).getSuccs().put(g.nodes.get(n.getLabel()), 0);
+                g.nodes.get(n.getLabel()).getPreds().put(g.nodes.get(succ.getLabel()), 0);
+            }
+        }
+        g.m = this.m;
         return g;
     }
-    
+
+
     @Override
     public String toString(){
         StringBuilder s = new StringBuilder();
@@ -188,7 +211,9 @@ public class AdjacencyListDirectedGraph {
         int[][] Matrix = GraphTools.generateGraphData(10, 20, false, false, false, 100001);
         GraphTools.afficherMatrix(Matrix);
         AdjacencyListDirectedGraph al = new AdjacencyListDirectedGraph(Matrix);
-        System.out.println(al);
-        // A completer
+        System.out.println("Original Graph:\n" + al);
+
+        AdjacencyListDirectedGraph inverseGraph = al.computeInverse();
+        System.out.println("Inverse Graph:\n" + inverseGraph);
     }
 }
