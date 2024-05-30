@@ -54,7 +54,7 @@ public class AdjacencyMatrixUndirectedGraph {
 	}
 	
 	public AdjacencyMatrixUndirectedGraph(AdjacencyListUndirectedGraph g) {
-		this.order = g.getNbNodes(); 				
+		this.order = g.getNbNodes();
 		this.m = g.getNbEdges(); 				
 		this.matrix = g.toAdjacencyMatrix(); 
 	}

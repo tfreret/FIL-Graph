@@ -152,10 +152,20 @@ public class AdjacencyListUndirectedGraph {
     /**
      * @return a matrix representation of the graph 
      */
+    // A verifier
     public int[][] toAdjacencyMatrix() {
-        int[][] matrix = new int[order][order];
-        // A completer
-        return matrix;
+        int[][] mat = new int[this.order][this.order];
+        for (int i = 0; i < this.order; i++) {
+            for (int j = 0; j < this.order; j++) {
+                mat[i][j] = 0;
+            }
+        }
+        for (UndirectedNode n : this.getNodes()) {
+            for (UndirectedNode sn : n.getNeighbours().keySet()) {
+                mat[n.getLabel()][sn.getLabel()] = 1;
+            }
+        }
+        return mat;
     }
 
     

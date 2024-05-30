@@ -135,6 +135,10 @@ public class AdjacencyListDirectedGraph {
         }
     }
 
+    public List<DirectedNode> getSuccessors(DirectedNode x) {
+        return new ArrayList<>(x.getSuccs().keySet());
+    }
+
 
     //--------------------------------------------------
     // 				Methods
