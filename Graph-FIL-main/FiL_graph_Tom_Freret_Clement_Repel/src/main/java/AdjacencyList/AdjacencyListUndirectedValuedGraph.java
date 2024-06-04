@@ -62,7 +62,7 @@ public class AdjacencyListUndirectedValuedGraph extends AdjacencyListUndirectedG
         GraphTools.afficherMatrix(matrix);
         GraphTools.afficherMatrix(matrixValued);
         AdjacencyListUndirectedValuedGraph al = new AdjacencyListUndirectedValuedGraph(matrixValued);
-        System.out.println(al);
+        System.out.println(al.getNodes());
         // A completer
     }
 }
