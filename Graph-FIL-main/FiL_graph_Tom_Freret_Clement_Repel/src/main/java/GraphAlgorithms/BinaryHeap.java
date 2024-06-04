@@ -27,12 +27,26 @@ public class BinaryHeap {
         return pos == 0;
     }
 
-    public void insert(int element) {
-    	// A completer
+    public boolean insert(int element) {
+        if (pos == nodes.length) {
+            resize();
+        }
+
+        nodes[pos] = element;
+        int current = pos;
+
+        while (nodes[current] < nodes[(current - 1) / 2]) {
+            swap((current - 1) / 2, current);
+            current = (current - 1) / 2;
+        }
+
+        pos++;
+
+        return true;
     }
 
-    public int remove() {
-    	// A completer
+    public int remove(int element) {
+        // A completer
     	return 0;
     }
 
@@ -40,8 +54,13 @@ public class BinaryHeap {
         if (isLeaf(src)) { // the leaf is a stopping case, then we return a default value
             return Integer.MAX_VALUE;
         } else {
-        	// A completer
-        	return Integer.MAX_VALUE;
+            int left = 2 * src + 1;
+            int right = 2 * src + 2;
+            if (right >= pos) {
+                return left;
+            } else {
+                return nodes[left] < nodes[right] ? left : right;
+            }
         }
     }
 
@@ -53,8 +72,7 @@ public class BinaryHeap {
 	 * 
 	 */	
     private boolean isLeaf(int src) {
-    	// A completer
-    	return false;
+    	return 2 * src + 1 >= pos;
     }
 
     private void swap(int father, int child) {
@@ -98,6 +116,7 @@ public class BinaryHeap {
     public static void main(String[] args) {
         BinaryHeap jarjarBin = new BinaryHeap();
         System.out.println(jarjarBin.isEmpty()+"\n");
+
         int k = 20;
         int m = k;
         int min = 2;
@@ -105,10 +124,19 @@ public class BinaryHeap {
         while (k > 0) {
             int rand = min + (int) (Math.random() * ((max - min) + 1));
             System.out.print("insert " + rand);
-            jarjarBin.insert(rand);            
+            jarjarBin.insert(rand);
             k--;
         }
-     // A completer
+
+        jarjarBin.insert(4);
+        jarjarBin.insert(10);
+        jarjarBin.insert(8);
+        jarjarBin.insert(6);
+        jarjarBin.insert(3);
+
+        jarjarBin.remove(10);
+        jarjarBin.remove(8);
+
         System.out.println("\n" + jarjarBin);
         System.out.println(jarjarBin.test());
     }
