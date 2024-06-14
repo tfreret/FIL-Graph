@@ -45,9 +45,28 @@ public class BinaryHeap {
         return true;
     }
 
-    public int remove(int element) {
-        // A completer
-    	return 0;
+    public int remove() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Heap is empty");
+        }
+
+        int removedElement = nodes[0];
+        nodes[0] = nodes[pos - 1];
+        nodes[pos - 1] = Integer.MAX_VALUE;
+        pos--;
+
+        int current = 0;
+        while (!isLeaf(current)) {
+            int bestChild = getBestChildPos(current);
+            if (nodes[current] > nodes[bestChild]) {
+                swap(current, bestChild);
+                current = bestChild;
+            } else {
+                break;
+            }
+        }
+
+        return removedElement;
     }
 
     private int getBestChildPos(int src) {
@@ -134,8 +153,8 @@ public class BinaryHeap {
         jarjarBin.insert(6);
         jarjarBin.insert(3);
 
-        jarjarBin.remove(10);
-        jarjarBin.remove(8);
+        jarjarBin.remove();
+        jarjarBin.remove();
 
         System.out.println("\n" + jarjarBin);
         System.out.println(jarjarBin.test());
