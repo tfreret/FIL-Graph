@@ -1,10 +1,11 @@
 package AdjacencyList;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
+import GraphAlgorithms.BinaryHeapEdge;
 import GraphAlgorithms.GraphTools;
 import Nodes.UndirectedNode;
+import Collection.Triple;
 
 
 public class AdjacencyListUndirectedGraph {
@@ -152,7 +153,6 @@ public class AdjacencyListUndirectedGraph {
     /**
      * @return a matrix representation of the graph 
      */
-    // A verifier
     public int[][] toAdjacencyMatrix() {
         int[][] mat = new int[this.order][this.order];
         for (int i = 0; i < this.order; i++) {
@@ -182,14 +182,52 @@ public class AdjacencyListUndirectedGraph {
         return s.toString();
     }
 
+    private void addEdgesToHeap(BinaryHeapEdge heap, UndirectedNode node, Set<UndirectedNode> inTree) {
+        for (Map.Entry<UndirectedNode, Integer> entry : node.getNeighbours().entrySet()) {
+            UndirectedNode destination = entry.getKey();
+            int weight = entry.getValue();
+            if (!inTree.contains(destination)) {
+                heap.insert(node, destination, weight);
+            }
+        }
+    }
+
+
+    public Map<UndirectedNode, UndirectedNode> prim(UndirectedNode start) {
+        BinaryHeapEdge edgesHeap = new BinaryHeapEdge();
+        Map<UndirectedNode, UndirectedNode> parent = new HashMap<>();
+        Set<UndirectedNode> inTree = new HashSet<>();
+
+        // Arbre de départ
+        inTree.add(start);
+        addEdgesToHeap(edgesHeap, start, inTree);
+
+        while (!edgesHeap.isEmpty() && inTree.size() < this.nodes.size()) {
+            Triple<UndirectedNode, UndirectedNode, Integer> minEdge = edgesHeap.remove();
+
+            if (!inTree.contains(minEdge.getSecond())) {
+                parent.put(minEdge.getSecond(), minEdge.getFirst());
+                inTree.add(minEdge.getSecond());
+
+                addEdgesToHeap(edgesHeap, minEdge.getSecond(), inTree);
+            }
+        }
+        return parent;
+    }
+
     public static void main(String[] args) {
         int[][] mat = GraphTools.generateGraphData(10, 20, false, true, false, 100001);
         GraphTools.afficherMatrix(mat);
         AdjacencyListUndirectedGraph al = new AdjacencyListUndirectedGraph(mat);
         System.out.println(al);
-        System.out.println("(2,5) is it in the graph ? " +  al.isEdge(al.getNodes().get(2), al.getNodes().get(5)));
-        
-        // A completer
-    }
 
+        Map<UndirectedNode, UndirectedNode> arbreMin = al.prim(al.getNodes().get(0));
+
+        System.out.println("Prim example");
+        for (Map.Entry<UndirectedNode, UndirectedNode> entry : arbreMin.entrySet()) {
+            if (entry.getValue() != null) {
+                System.out.println(entry.getValue().getLabel() + " - " + entry.getKey().getLabel());
+            }
+        }
+    }
 }

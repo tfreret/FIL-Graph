@@ -1,12 +1,12 @@
 package AdjacencyList;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import GraphAlgorithms.BinaryHeap;
+import java.util.*;
+
+import GraphAlgorithms.BinaryHeapEdge;
 import GraphAlgorithms.GraphTools;
 import Nodes.DirectedNode;
+import Collection.Triple;
+
 
 public class AdjacencyListDirectedValuedGraph extends AdjacencyListDirectedGraph {
 
@@ -42,7 +42,6 @@ public class AdjacencyListDirectedValuedGraph extends AdjacencyListDirectedGraph
      * Adds the arc (from,to) with cost  if it is not already present in the graph
      */
     public void addArc(DirectedNode from, DirectedNode to, int cost) {
-        // A verifier
         if (!from.getSuccs().containsKey(to)) {
             from.getSuccs().put(to,cost);
             to.getPreds().put(from,cost);
@@ -54,7 +53,6 @@ public class AdjacencyListDirectedValuedGraph extends AdjacencyListDirectedGraph
      * Removes the arc (from,to) if it is present in the graph
      */
     public void removeArc(DirectedNode from, DirectedNode to) {
-        // A verifier
         if (from.getSuccs().containsKey(to)) {
             from.getSuccs().remove(to);
             to.getPreds().remove(from);
@@ -153,44 +151,6 @@ public class AdjacencyListDirectedValuedGraph extends AdjacencyListDirectedGraph
         return result;
     }
 
-
-    private void addEdgesToHeap(BinaryHeap<Edge> heap, DirectedNode node, Set<DirectedNode> inTree) {
-        for (Map.Entry<DirectedNode, Integer> entry : node.getSuccs().entrySet()) {
-            DirectedNode destination = entry.getKey();
-            int weight = entry.getValue();
-            if (!inTree.contains(destination)) {
-                heap.insert(new Edge(node, destination, weight));
-            }
-        }
-    }
-
-
-    public Map<DirectedNode, DirectedNode> prim(DirectedNode start) {
-        BinaryHeap<Edge> edgesHeap = new BinaryHeap<>(); // Assurez-vous que BinaryHeap peut gérer des Edge
-        Map<DirectedNode, DirectedNode> parent = new HashMap<>();
-        Set<DirectedNode> inTree = new HashSet<>();
-
-        // arbre de départ
-        inTree.add(start);
-        addEdgesToHeap(edgesHeap, start, inTree);
-
-        while (!edgesHeap.isEmpty() && inTree.size() < this.nodes.size()) {
-            Edge minEdge = edgesHeap.remove(); // get min edge
-
-            if (!inTree.contains(minEdge.destination)) { // check for cycle
-                parent.put(minEdge.destination, minEdge.source);
-                inTree.add(minEdge.destination);
-
-                // add new valid edges
-                addEdgesToHeap(edgesHeap, start, inTree);
-            }
-        }
-
-        return parent;
-    }
-
-
-
     public static void main(String[] args) {
         int[][] matrix = GraphTools.generateGraphData(10, 20, false, false, false, 100001);
         int[][] matrixValued = GraphTools.generateValuedGraphData(10, false, false, true, false, 100001);
@@ -205,15 +165,6 @@ public class AdjacencyListDirectedValuedGraph extends AdjacencyListDirectedGraph
         System.out.println("Dijkstra example");
         for (Map.Entry<DirectedNode, Integer> entry : result.entrySet()) {
             System.out.println(entry.getKey().getLabel() + "\t      " + entry.getValue());
-        }
-
-        Map<DirectedNode, DirectedNode> arbreMin = al.prim(al.getNodes().get(0));
-
-        System.out.println("Prim example");
-        for (Map.Entry<DirectedNode, DirectedNode> entry : arbreMin.entrySet()) {
-            if (entry.getValue() != null) {
-                System.out.println(entry.getValue().getLabel() + " - " + entry.getKey().getLabel());
-            }
         }
     }
 }

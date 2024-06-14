@@ -70,7 +70,7 @@ public class BinaryHeap {
     }
 
     private int getBestChildPos(int src) {
-        if (isLeaf(src)) { // the leaf is a stopping case, then we return a default value
+        if (isLeaf(src)) {
             return Integer.MAX_VALUE;
         } else {
             int left = 2 * src + 1;
@@ -153,8 +153,8 @@ public class BinaryHeap {
         jarjarBin.insert(6);
         jarjarBin.insert(3);
 
-        jarjarBin.remove();
-        jarjarBin.remove();
+        System.out.println(jarjarBin.remove());
+        System.out.println(jarjarBin.remove());
 
         System.out.println("\n" + jarjarBin);
         System.out.println(jarjarBin.test());

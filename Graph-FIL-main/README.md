@@ -2,6 +2,6 @@
 
 Tom Freret / Clement Repel
 
-
+BFS / DFS -> GraphTools
 Dijkstra ->  AdjencyListDirectedValueGraph
-Prim ->  AdjencyListDirectedValueGraph
+Prim ->  AdjencyListUndirectedValueGraph

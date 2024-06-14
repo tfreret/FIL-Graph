@@ -62,5 +62,4 @@ public class UndirectedNode extends AbstractNode {
     public void addNeigh(UndirectedNode v, int val) {
         this.neighbours.put(v, val);
     }
-
 }
